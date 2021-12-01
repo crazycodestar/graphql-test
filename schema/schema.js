@@ -13,22 +13,6 @@ const {
 	GraphQLNonNull,
 } = graphql;
 
-// dummy data
-const books = [
-	{ name: "Name of winds", genre: "Fantasy", id: "1", authorId: "1" },
-	{ name: "The final Empire", genre: "Fantasy", id: "2", authorId: "2" },
-	{ name: "The long earth", genre: "Sci-Fi", id: "3", authorId: "3" },
-	{ name: "The Hero of ages", genre: "Fantasy", id: "3", authorId: "2" },
-	{ name: "The Colour of magic", genre: "Fantasy", id: "3", authorId: "3" },
-	{ name: "The Light Fantastic", genre: "Fantasy", id: "3", authorId: "3" },
-];
-
-const authors = [
-	{ name: "Olalekan Adekanmbi", age: 18, id: "1" },
-	{ name: "Abundance Anyanwu", age: 16, id: "2" },
-	{ name: "Natheniel anothernoSurname", age: 19, id: "3" },
-];
-
 const BookType = new GraphQLObjectType({
 	name: "Book",
 	fields: () => ({
