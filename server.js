@@ -6,7 +6,7 @@ const schema = require("./schema/schema");
 
 const app = express();
 
-mongoose.connect("mongodb://localhost:27017/fruitsDB", {
+mongoose.connect("mongodb://localhost:27017/bookStoreDB", {
 	useNewUrlParser: true,
 });
 

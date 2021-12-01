@@ -39,7 +39,7 @@ const BookType = new GraphQLObjectType({
 			type: AuthorType,
 			resolve(parent, args) {
 				// return _.find(authors, { id: parent.authorId });
-				Author.findById(parent.authorId);
+				return Author.findById(parent.authorId);
 			},
 		},
 	}),
@@ -121,4 +121,5 @@ const mutation = new GraphQLObjectType({
 
 module.exports = new GraphQLSchema({
 	query: RootQuery,
+	mutation: mutation,
 });
