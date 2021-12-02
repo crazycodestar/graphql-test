@@ -1,16 +1,27 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
-const { ApolloServer } = require("apollo-server");
+const { ApolloServer } = require("apollo-server-express");
 
-const typeDefs = require("./schema/schema");
+const typeDefs = require("./typeDefs");
+const resolvers = require("./resolvers");
 
-const app = express();
+const main = async () => {
+	mongoose.connect("mongodb://localhost:27017/bookStoreDB", {
+		useNewUrlParser: true,
+	});
 
-mongoose.connect("mongodb://localhost:27017/bookStoreDB", {
-	useNewUrlParser: true,
-});
+	const app = express();
+	const apolloServer = new ApolloServer({ typeDefs, resolvers });
 
-const server = new ApolloServer({ typeDefs });
+	app.use(cors({ origin: "*" }));
 
-app.listen(4000, () => console.log("listening on port 4000"));
+	await apolloServer.start();
+
+	apolloServer.applyMiddleware({ app: app });
+
+	app.listen(4000, () => console.log("listening on port 4000"));
+};
+
+main();

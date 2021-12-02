@@ -108,10 +108,17 @@
 // 	mutation: mutation,
 // });
 
-const {} = require("apollo-server");
+const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-	# dummy code data here
+	type Book {
+		name: String
+		author: String
+	}
+	type Query {
+		getBook: Book
+		hello: String
+	}
 `;
 
 module.exports = typeDefs;
