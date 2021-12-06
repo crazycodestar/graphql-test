@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const jwt = require("jsonwebtoken");
 
 const { ApolloServer } = require("apollo-server-express");
 
@@ -13,7 +14,29 @@ const main = async () => {
 	});
 
 	const app = express();
-	const apolloServer = new ApolloServer({ typeDefs, resolvers });
+
+	const authorization = async (req) => {
+		const bearer = req.headers.authorization || "";
+		const token = bearer.split(" ")[1];
+		try {
+			const user = await jwt.verify(token, secret);
+			req.user = user;
+		} catch (err) {
+			console.log(err);
+		}
+		req.next();
+	};
+
+	// jwt
+	const secret = "8926f94a56d3a174e838f235ac6be65d6ab606933766eea2e4ca4";
+	app.use(authorization);
+	const apolloServer = new ApolloServer({
+		typeDefs,
+		resolvers,
+		context: ({ req }) => {
+			return { secret, userData: req.user };
+		},
+	});
 
 	app.use(cors({ origin: "*" }));
 
